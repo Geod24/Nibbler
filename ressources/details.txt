@@ -1,0 +1,68 @@
+3 libs dynamiques
+Prototypes (?):
+
+Dans le programme:
+(Pseudo-code)
+**********************************
+int	main(int ac, char **av)
+{
+  parseArgs();
+  loadLibrary(); // Charge la library avec dlsym
+
+  ==> initLibrary();
+  ==> startEventLoop();
+  ==> closeLibrary();
+
+  unloadLibrary(); // dlclose
+  return (EXIT_SUCCESS);
+}
+********************************
+
+
+Dans les libraries (.so):
+
+int	initLibrary(char *path);
+retourne -1 en cas d'erreur (une librairie .so n'exit pas)
+
+int	closeLibrary(char *path);
+...
+
+int	startEventLoop();
+La boucle d'evenement.
+
+int	bindActions(??);
+Lie une key (touche clavier) avec un pointeur sur fonction.
+
+**********************************
+
+Nos actions (programme):
+class Snake {
+void	moveRight();
+void	moveLeft();
+void	moveUp();
+void	moveDown();
+bool	touchLost();
+void	move();
+void	eat(const Food& t);
+
+size_t			length;
+std::vector<Position>	pos;
+}
+
+typedef enum {
+  Right = 0,
+  Up = 1,
+  Left = 2,
+  Down = 3
+} MovementType
+
+typedef struct {
+ int x;
+ int y;
+} Position;
+
+
+class Food {
+  int x;
+  int y;
+}
